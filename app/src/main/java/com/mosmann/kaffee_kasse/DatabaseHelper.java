@@ -276,13 +276,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Aktuellen Bestand abrufen
         int aktuellerBestand = getBestandKaffee1();
 
+        // Berechnen Sie den neuen Bestand, stellen Sie sicher, dass er nicht unter 0 fällt
+        int neuerBestand = Math.max(aktuellerBestand + menge, 0);
+
         ContentValues values = new ContentValues();
-        values.put(COLUMN_VARIABLEN_BESTAND_KAFFEESORTE_1, aktuellerBestand + menge);
+        values.put(COLUMN_VARIABLEN_BESTAND_KAFFEESORTE_1, neuerBestand);
 
         // Update durchführen
         db.update(TABLE_VARIABLEN, values, null, null);
         db.close();
     }
+
 
     public int getBestandKaffee1() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -311,13 +315,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Aktuellen Bestand abrufen
         int aktuellerBestand = getBestandKaffee2();
 
+        // Berechnen Sie den neuen Bestand, stellen Sie sicher, dass er nicht unter 0 fällt
+        int neuerBestand = Math.max(aktuellerBestand + menge, 0);
+
         ContentValues values = new ContentValues();
-        values.put(COLUMN_VARIABLEN_BESTAND_KAFFEESORTE_2, aktuellerBestand + menge);
+        values.put(COLUMN_VARIABLEN_BESTAND_KAFFEESORTE_2, neuerBestand);
 
         // Update durchführen
         db.update(TABLE_VARIABLEN, values, null, null);
         db.close();
     }
+
 
     public int getBestandKaffee2() {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -346,13 +354,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // Aktuellen Bestand abrufen
         int aktuellerBestand = getBestandMilchpulver();
 
+        // Berechnen Sie den neuen Bestand, stellen Sie sicher, dass er nicht unter 0 fällt
+        int neuerBestand = Math.max(aktuellerBestand + menge, 0);
+
         ContentValues values = new ContentValues();
-        values.put(COLUMN_VARIABLEN_BESTAND_MILCHPULVER, aktuellerBestand + menge);
+        values.put(COLUMN_VARIABLEN_BESTAND_MILCHPULVER, neuerBestand);
 
         // Update durchführen
         db.update(TABLE_VARIABLEN, values, null, null);
         db.close();
     }
+
 
     public int getBestandMilchpulver() {
         SQLiteDatabase db = this.getReadableDatabase();

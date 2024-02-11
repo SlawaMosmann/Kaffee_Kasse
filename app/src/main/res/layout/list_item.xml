@@ -83,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|center_vertical"
         android:clickable="true"
+        android:focusable="true"
         android:contentDescription="@string/eintragLoeschen"
         app:srcCompat="@android:drawable/ic_menu_delete" />
 

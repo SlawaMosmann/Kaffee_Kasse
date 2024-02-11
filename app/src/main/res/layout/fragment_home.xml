@@ -13,7 +13,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/border_background"
         android:gravity="center_horizontal|center_vertical"
-        android:textSize="40dp"
+        android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_ueberschrift1" />
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/tv_Kontostand"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,7 +45,7 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/border_background"
         android:gravity="center_horizontal|center_vertical"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/iv_kaffee1"
         app:layout_constraintStart_toStartOf="@+id/iv_kaffee1"
         app:layout_constraintTop_toBottomOf="@+id/iv_kaffee1" />
@@ -65,7 +65,7 @@
         android:layout_height="35dp"
         android:background="@drawable/border_background"
         android:gravity="center_horizontal|center_vertical"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="@+id/iv_kaffee2"
         app:layout_constraintStart_toStartOf="@+id/iv_kaffee2"
         app:layout_constraintTop_toTopOf="@+id/tv_kaffee1" />
@@ -87,8 +87,21 @@
         android:layout_marginTop="8dp"
         android:background="@drawable/border_background"
         android:gravity="center_horizontal|center_vertical"
-        android:textSize="24dp"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/iv_milk" />
+
+    <TextView
+        android:id="@+id/tv_actioninfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/actionInfo"
+        app:layout_constraintEnd_toEndOf="@+id/tv_milk"
+        app:layout_constraintStart_toStartOf="@+id/tv_milk"
+        app:layout_constraintTop_toBottomOf="@+id/tv_milk" />
 </androidx.constraintlayout.widget.ConstraintLayout>

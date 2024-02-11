@@ -1,5 +1,6 @@
 package com.mosmann.kaffee_kasse.ui.uebersicht;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -34,7 +35,7 @@ public class CustomAdapter extends ArrayAdapter<AusgabenData> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View rowView = inflater.inflate(R.layout.list_item, parent, false);
+        @SuppressLint("ViewHolder") View rowView = inflater.inflate(R.layout.list_item, parent, false);
 
         ImageView imageView = rowView.findViewById(R.id.image);
         TextView datumView = rowView.findViewById(R.id.datum);

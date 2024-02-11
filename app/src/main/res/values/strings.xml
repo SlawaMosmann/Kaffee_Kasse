@@ -12,5 +12,6 @@
     <string name="felder_leeren">Felder leeren</string>
     <string name="eintragLoeschen">Eintrag löschen</string>
     <string name="betrag_angeben">Betrag eingeben</string>
+    <string name="actionInfo">Berühren und halten Sie ein Bild, um den Bestand um 1 zu verringern.</string>
 
 </resources>
