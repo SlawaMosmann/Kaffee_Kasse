@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Kaffee_Kasse</string>
+    <string name="title_home">Home</string>
+    <string name="title_ausgaben">Ausgaben</string>
+    <string name="title_einnahmen">Einnahmen</string>
+    <string name="title_uebersicht">Übersicht</string>
+    <string name="tv_Kontostand">Kontostand</string>
+    <string name="menge_eingeben">Menge eingeben</string>
+    <string name="gesamt_preis_eingeben">Gesamtpreis eingeben</string>
+    <string name="kommentar">Kommentar einfügen</string>
+    <string name="bestaetigen">Bestätigen</string>
+    <string name="felder_leeren">Felder leeren</string>
+    <string name="eintragLoeschen">Eintrag löschen</string>
+    <string name="betrag_angeben">Betrag eingeben</string>
+
+</resources>
