@@ -1,3 +1,6 @@
+Android Studio project<br/>
+Language: german
+
 <img src="/images/Screenshot1.jpg" alt="Screenshot1" width="200" />  <img src="/images/Screenshot2.jpg" alt="Screenshot2" width="200"/><br/>
 <img src="/images/Screenshot3.jpg" alt="Screenshot3" width="200"/>  <img src="/images/Screenshot4.jpg" alt="Screenshot4" width="200"/>
 
@@ -7,9 +10,10 @@ Coffee Cashier is a simple app designed to streamline the management of your off
 
 Key Features:
 
-Capture and categorize income and expenses
-Overview of main supplies
-Account balance tracking
-Transaction history for easy reference
+<li>Capture and categorize income and expenses</li>
+<li>Overview of main supplies</li>
+<li>Account balance tracking</li>
+<li>Transaction history for easy reference</li>
+<li>Local storage of data in SQL database</li><br/>
 
 //TODO multilingual support
