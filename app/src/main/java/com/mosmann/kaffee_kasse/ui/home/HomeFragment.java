@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import com.mosmann.kaffee_kasse.DatabaseHelper;
 import com.mosmann.kaffee_kasse.R;
 
+import java.math.BigDecimal;
+
 public class HomeFragment extends Fragment {
 
     TextView tv_kontostand;
@@ -37,10 +39,10 @@ public class HomeFragment extends Fragment {
         tv_milk = root.findViewById(R.id.tv_milk);
 
         databaseHelper = new DatabaseHelper(requireContext());
-        double aktuellerKontostand = databaseHelper.getAktuellerKontostand();
+        BigDecimal aktuellerKontostand = databaseHelper.getAktuellerKontostandBigDecimal();
         tv_kontostand.setText(aktuellerKontostand + "€");
         // Falls der Kontostand positiv ist, grüne Farbe, ansonsten rote Farbe
-        int textColor = aktuellerKontostand >= 0 ? ContextCompat.getColor(requireContext(), android.R.color.holo_green_dark) : ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark);
+        int textColor = aktuellerKontostand.compareTo(BigDecimal.ZERO) >= 0 ? ContextCompat.getColor(requireContext(), android.R.color.holo_green_dark) : ContextCompat.getColor(requireContext(), android.R.color.holo_red_dark);
         tv_kontostand.setTextColor(textColor);
 
         int kaffee1Anzahl = databaseHelper.getBestandKaffee1();

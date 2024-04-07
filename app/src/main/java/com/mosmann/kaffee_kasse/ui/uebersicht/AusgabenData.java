@@ -1,15 +1,17 @@
 package com.mosmann.kaffee_kasse.ui.uebersicht;
 
+import java.math.BigDecimal;
+
 public class AusgabenData {
     private long id;
     private String datum;
     private String art;
     private int menge;
-    private double gesamtbetrag;
+    private BigDecimal gesamtbetrag;
     private String kommentar;
 
     //constructors
-    public AusgabenData(long id, String datum, String art, int menge, double gesamtbetrag, String kommentar) {
+    public AusgabenData(long id, String datum, String art, int menge, BigDecimal gesamtbetrag, String kommentar) {
         this.id = id;
         this.datum = datum;
         this.art = art;
@@ -67,11 +69,11 @@ public class AusgabenData {
         this.menge = menge;
     }
 
-    public double getGesamtbetrag() {
+    public BigDecimal getGesamtbetrag() {
         return gesamtbetrag;
     }
 
-    public void setGesamtbetrag(double gesamtbetrag) {
+    public void setGesamtbetrag(BigDecimal gesamtbetrag) {
         this.gesamtbetrag = gesamtbetrag;
     }
 

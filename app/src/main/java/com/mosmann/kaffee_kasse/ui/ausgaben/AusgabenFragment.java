@@ -21,6 +21,7 @@ import com.mosmann.kaffee_kasse.ui.uebersicht.AusgabenData;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.math.BigDecimal;
 
 public class AusgabenFragment extends Fragment {
 
@@ -50,7 +51,10 @@ public class AusgabenFragment extends Fragment {
 
             if (!mengeStr.isEmpty() && !gesamtPreisStr.isEmpty()) {
                 int menge = Integer.parseInt(mengeStr);
-                double gesamtpreis = Double.parseDouble(gesamtPreisStr);
+                BigDecimal gesamtpreis = new BigDecimal(gesamtPreisStr);
+
+                // Runde den Gesamtpreis auf 2 Kommastellen
+                gesamtpreis = gesamtpreis.setScale(2, BigDecimal.ROUND_HALF_UP);
 
                 // Get the current date in dd.MM.yy format
                 SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
@@ -63,16 +67,16 @@ public class AusgabenFragment extends Fragment {
                 ausgabenData.setArt(selectedArt);
                 ausgabenData.setMenge(menge);
 
-                // check "gesamtpreis" > 0, Betrag für die Rechnung und Datenbank negativ machen
-                if (gesamtpreis > 0) {
-                    gesamtpreis = -Math.abs(gesamtpreis);
+                // Überprüfe, ob der Gesamtpreis größer als 0 ist, Betrag für die Rechnung und Datenbank negativ machen
+                if (gesamtpreis.compareTo(BigDecimal.ZERO) > 0) {
+                    gesamtpreis = gesamtpreis.negate();
                 }
 
                 ausgabenData.setGesamtbetrag(gesamtpreis);
 
                 ausgabenData.setKommentar(kommentar);
 
-                // Call the insertAusgabe method with the AusgabenData object
+                // Rufe die insertAusgabe-Methode mit dem AusgabenData-Objekt auf
                 long newRowId = databaseHelper.insertAusgabe(ausgabenData);
 
                 if (newRowId != -1) {

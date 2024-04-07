@@ -11,6 +11,7 @@ import com.mosmann.kaffee_kasse.ui.einnahmen.EinnahmenData;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -116,7 +117,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(COLUMN_AUSGABEN_DATUM, ausgabenData.getDatum());
         values.put(COLUMN_AUSGABEN_ART, ausgabenData.getArt());
         values.put(COLUMN_AUSGABEN_MENGE, ausgabenData.getMenge());
-        values.put(COLUMN_AUSGABEN_GESAMTBETRAG, ausgabenData.getGesamtbetrag());
+        values.put(COLUMN_AUSGABEN_GESAMTBETRAG, ausgabenData.getGesamtbetrag().toString()); // Konvertierung zu String
         values.put(COLUMN_AUSGABEN_KOMMENTAR, ausgabenData.getKommentar());
 
         // Füge die Daten in die Tabelle "ausgaben" ein
@@ -130,10 +131,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(COLUMN_EINNAHMEN_DATUM, einnahmenData.getDatum());
         values.put(COLUMN_EINNAHMEN_ART, einnahmenData.getArt());
-        values.put(COLUMN_EINNAHMEN_GESAMTBETRAG, einnahmenData.getGesamtbetrag());
+        values.put(COLUMN_EINNAHMEN_GESAMTBETRAG, einnahmenData.getGesamtbetrag().toString()); // Konvertierung zu String
         values.put(COLUMN_EINNAHMEN_KOMMENTAR, einnahmenData.getKommentar());
 
-        // Insert data into the "einnahmen" table
+        // Füge die Daten in die Tabelle "einnahmen" ein
         long newRowId = db.insert(TABLE_EINNAHMEN, null, values);
         db.close();
         return newRowId;
@@ -188,7 +189,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         double gesamtbetrag = cursor.getDouble(gesamtbetragIndex);
                         String kommentar = cursor.getString(kommentarIndex);
 
-                        AusgabenData dataEntry = new AusgabenData(id, datum, art, menge, gesamtbetrag, kommentar);
+                        BigDecimal gesamtbetragBigDecimal = BigDecimal.valueOf(gesamtbetrag); // Umwandlung von double in BigDecimal
+
+                        AusgabenData dataEntry = new AusgabenData(id, datum, art, menge, gesamtbetragBigDecimal, kommentar);
                         returnList.add(dataEntry);
                     } else {
                         // It's from the einnahmen table
@@ -198,9 +201,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         double gesamtbetrag = cursor.getDouble(gesamtbetragIndex);
                         String kommentar = cursor.getString(kommentarIndex);
 
-                        EinnahmenData einnahmenData = new EinnahmenData(id, datum, art, gesamtbetrag, kommentar);
+                        BigDecimal gesamtbetragBigDecimal = BigDecimal.valueOf(gesamtbetrag); // Umwandlung von double in BigDecimal
+
+                        EinnahmenData einnahmenData = new EinnahmenData(id, datum, art, gesamtbetragBigDecimal, kommentar);
                         // You need to create the EinnahmenData class accordingly
-                        // returnList.add(einnahmenData);
+                        //returnList.add(einnahmenData);
                     }
                 }
             } while (cursor.moveToNext());
@@ -230,36 +235,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void updateKontostand(double betrag) {
+    public void updateKontostand(BigDecimal betrag) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
         // Aktuellen Kontostand abrufen
-        double aktuellerKontostand = getAktuellerKontostand();
+        BigDecimal aktuellerKontostand = getAktuellerKontostandBigDecimal();
 
         // Neuen Kontostand berechnen und aktualisieren
-        double neuerKontostand = aktuellerKontostand + betrag;
-        values.put(COLUMN_VARIABLEN_KONTOSTAND, neuerKontostand);
+        BigDecimal neuerKontostand = aktuellerKontostand.add(betrag);
+        values.put(COLUMN_VARIABLEN_KONTOSTAND, neuerKontostand.toString());
 
         // Update durchführen
         db.update(TABLE_VARIABLEN, values, null, null);
         db.close();
     }
 
-    public double getAktuellerKontostand() {
-        double kontostand = 0.0;
+    public BigDecimal getAktuellerKontostandBigDecimal() {
         SQLiteDatabase db = this.getReadableDatabase();
+        BigDecimal kontostand = BigDecimal.ZERO;
 
-        // Spalten-Array erstellen
         String[] columns = {COLUMN_VARIABLEN_KONTOSTAND};
-
         Cursor cursor = db.query(TABLE_VARIABLEN, columns, null, null, null, null, null);
 
         if (cursor != null && cursor.moveToFirst()) {
-            // Überprüfen, ob die Spalte vorhanden ist, bevor der Index abgerufen wird
             int columnIndex = cursor.getColumnIndex(COLUMN_VARIABLEN_KONTOSTAND);
             if (columnIndex != -1) {
-                kontostand = cursor.getDouble(columnIndex);
+                kontostand = new BigDecimal(cursor.getString(columnIndex));
             }
         }
 

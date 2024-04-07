@@ -16,6 +16,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.mosmann.kaffee_kasse.DatabaseHelper;
 import com.mosmann.kaffee_kasse.R;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class CustomAdapter extends ArrayAdapter<AusgabenData> {
@@ -48,7 +49,7 @@ public class CustomAdapter extends ArrayAdapter<AusgabenData> {
         AusgabenData ausgabenData = ausgabenListe.get(position);
 
         // Setzen Sie hier Ihr Bild basierend auf dem Wert von gesamtpreis
-        if (ausgabenData.getGesamtbetrag() > 0) {
+        if (ausgabenData.getGesamtbetrag().compareTo(BigDecimal.ZERO) > 0) {
             imageView.setImageResource(R.drawable.plus2);
         } else {
             imageView.setImageResource(R.drawable.minus2);
@@ -58,7 +59,7 @@ public class CustomAdapter extends ArrayAdapter<AusgabenData> {
         artView.setText(ausgabenData.getArt());
 
         // Überprüfen Sie, ob gesamtpreis positiv ist, um menge anzuzeigen oder auszublenden
-        if (ausgabenData.getGesamtbetrag() > 0) {
+        if (ausgabenData.getGesamtbetrag().compareTo(BigDecimal.ZERO) > 0) {
             mengeView.setVisibility(View.GONE);
             x.setVisibility(View.GONE);
         } else {
@@ -88,15 +89,15 @@ public class CustomAdapter extends ArrayAdapter<AusgabenData> {
                 .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         // Hier rufst du die Methode zum Löschen des Eintrags auf
-                        if (ausgabenData.getGesamtbetrag() > 0) {
+                        if (ausgabenData.getGesamtbetrag().compareTo(BigDecimal.ZERO) > 0) {
                             Log.d("DeleteEntry", "Deleting Einnahmen Entry with ID: " + ausgabenData.getId());
                             deleteEinnahmenEntry(ausgabenData.getId());
-                            databaseHelper.updateKontostand(ausgabenData.getGesamtbetrag() * -1);
+                            databaseHelper.updateKontostand(ausgabenData.getGesamtbetrag().multiply(BigDecimal.valueOf(-1)));
 
                         } else {
                             Log.d("DeleteEntry", "Deleting Ausgaben Entry with ID: " + ausgabenData.getId());
                             deleteAusgabenEntry(ausgabenData.getId());
-                            databaseHelper.updateKontostand(ausgabenData.getGesamtbetrag() * -1);
+                            databaseHelper.updateKontostand(ausgabenData.getGesamtbetrag().multiply(BigDecimal.valueOf(-1)));
                         }
                         switch (ausgabenData.getArt()) {
                             case "Kaffeesorte 1": {

@@ -17,6 +17,7 @@ import com.mosmann.kaffee_kasse.R;
 import com.mosmann.kaffee_kasse.DatabaseHelper;
 import com.mosmann.kaffee_kasse.ui.DecimalDigitsInputFilter;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -46,9 +47,12 @@ public class EinnahmenFragment extends Fragment {
             String kommentar = editTextText.getText().toString().trim();
 
             if (!betragStr.isEmpty()) {
-                double betrag = Double.parseDouble(betragStr);
+                BigDecimal betrag = new BigDecimal(betragStr);
 
-                if (betrag > 0) {
+                // Runde den Betrag auf 2 Kommastellen
+                betrag = betrag.setScale(2, BigDecimal.ROUND_HALF_UP);
+
+                if (betrag.compareTo(BigDecimal.ZERO) > 0) {
                     // Get the current date in dd.MM.yy format
                     SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
                     String currentDate = sdf.format(new Date());
@@ -77,6 +81,7 @@ public class EinnahmenFragment extends Fragment {
                 Toast.makeText(requireContext(), "Bitte füllen Sie den Betrag aus", Toast.LENGTH_SHORT).show();
             }
         });
+
 
 
         // Setze OnClickListener für den "Felder leeren"-Button
